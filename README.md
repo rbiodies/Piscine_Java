@@ -1,6 +1,6 @@
 # Piscine_Java
-### The goal of these modules:
-To introduce you to ****.
+### The goal of this a 14-day long intensive course:
+To covering topics from Java Core (including **Reflection API**, **Collections**, **JDBC** and **Multi-Threading**) to **Spring** & **Sockets**.
 ### Days (individual projects):
 - [Day 00: Structures and arrays](https://github.com/rbiodies/Piscine_Java/tree/main/java_day00)
 - [Day 01: OOP and Colections](https://github.com/rbiodies/Piscine_Java/tree/main/java_day01)
