@@ -13,4 +13,4 @@ To covering topics from Java Core (including **Reflection API**, **Collections**
 - [Day 08: Spring](https://github.com/rbiodies/Piscine_Java/tree/main/java_day08)
 - [Day 09: Sockets](https://github.com/rbiodies/Piscine_Java/tree/main/java_day09)
 ### Rush (group projects):
-- [Rush 01: Java FX and Sockets](https://github.com/rbiodies/CPP_Modules/tree/main/cpp_module_09)
+- [Rush 01: Java FX and Sockets](https://github.com/rbiodies/Piscine_Java/tree/main/java_rush01)
