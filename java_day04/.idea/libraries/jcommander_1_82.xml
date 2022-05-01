@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jcommander-1.82">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/ex02/ImagesToChar/target/com/beust/jcommander/jcommander-1.82.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

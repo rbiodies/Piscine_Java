@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/src/ex00/TanksClient/TanksClient.iml" filepath="$PROJECT_DIR$/src/ex00/TanksClient/TanksClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/ex00/TanksServer/TanksServer.iml" filepath="$PROJECT_DIR$/src/ex00/TanksServer/TanksServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java_rush01.iml" filepath="$PROJECT_DIR$/java_rush01.iml" />
+    </modules>
+  </component>
+</project>

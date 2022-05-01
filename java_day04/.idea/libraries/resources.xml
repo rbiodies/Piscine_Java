@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="resources">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/ex02/ImagesToChar/target/resources/JColor-5.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/ex02/ImagesToChar/target/resources/jcommander-1.82.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
