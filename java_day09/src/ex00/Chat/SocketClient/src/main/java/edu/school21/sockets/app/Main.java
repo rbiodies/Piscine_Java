@@ -1,34 +1,20 @@
 package edu.school21.sockets.app;
 
-import java.io.*;
-import java.net.Socket;
+import edu.school21.sockets.client.Client;
 
 public class Main {
+    public static void main(String[] args) {
+        if (args.length != 1 || !args[0].startsWith("--server-port=")) {
+            System.out.println("Usage: --server-port=<port>");
+        } else {
+            try {
+                int port = Integer.parseInt(args[0].substring(args[0].indexOf('=') + 1));
+                Client client = new Client();
 
-    public static void  main(String[] args) {
-        try {
-            Socket          clientSocket = new Socket("localhost", 4004);
-            BufferedReader  reader = new BufferedReader(new InputStreamReader(System.in));
-            BufferedReader  in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            BufferedWriter  out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-
-            out.write("");
-            while (true) {
-                String serverWord = in.readLine();
-                System.out.println(serverWord);
-                if (serverWord.equals("Successful!")) {
-                    break;
-                }
-                System.out.print("> ");
-                String word = reader.readLine();
-                out.write(word + "\n");
-                out.flush();
+                client.run(port);
+            } catch (NumberFormatException e) {
+                System.err.println("Error: Argument has not type of integer!");
             }
-            clientSocket.close();
-            in.close();
-            out.close();
-        } catch (IOException e) {
-            System.err.println(e);
         }
     }
 }

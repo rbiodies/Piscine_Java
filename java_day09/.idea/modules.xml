@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/src/ex00/Chat/SocketClient/SocketClient.iml" filepath="$PROJECT_DIR$/src/ex00/Chat/SocketClient/SocketClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/ex01/Chat/SocketClient/SocketClient1.iml" filepath="$PROJECT_DIR$/src/ex01/Chat/SocketClient/SocketClient1.iml" />
       <module fileurl="file://$PROJECT_DIR$/src/ex00/Chat/SocketServer/SocketServer.iml" filepath="$PROJECT_DIR$/src/ex00/Chat/SocketServer/SocketServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/ex01/Chat/SocketServer/SocketServer1.iml" filepath="$PROJECT_DIR$/src/ex01/Chat/SocketServer/SocketServer1.iml" />
       <module fileurl="file://$PROJECT_DIR$/java_day09.iml" filepath="$PROJECT_DIR$/java_day09.iml" />
     </modules>
   </component>

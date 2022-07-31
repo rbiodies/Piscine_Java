@@ -2,7 +2,7 @@ package ex01;
 
 public class Program {
 
-    public static void  main(String[] args) {
+    public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
             User tmp;
             if (i % 2 == 0) {
@@ -10,7 +10,7 @@ public class Program {
             } else {
                 tmp = new User("Woman", i);
             }
-            System.out.println("User number: '" + i + "', id: '" + tmp.getIdentifier() + "';");
+            System.out.printf("User number: %d, id: %d\n", i, tmp.getIdentifier());
         }
     }
 }

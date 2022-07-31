@@ -3,28 +3,27 @@ package ex00;
 import java.util.UUID;
 
 public class Transaction {
+    private UUID identifier;
+    private User sender;
+    private User recipient;
+    private Integer amount;
+    private Category category;
+    private Status status;
 
-        private UUID        identifier;
-        private User        recipient;
-        private User        sender;
-        private Integer     amount;
-        private Category    category;
-        private Status      status;
+    private enum Category {
+        DEBIT,
+        CREDIT
+    }
 
-        private enum    Category {
-            DEBIT,
-            CREDIT
-        }
-
-        private enum    Status {
-            FAIL,
-            SUCCESS
-        }
+    private enum Status {
+        FAIL,
+        SUCCESS
+    }
 
     public Transaction(User sender, User recipient, Integer amount) {
         this.sender = sender;
         this.recipient = recipient;
-        this.identifier = new UUID(123, 456);
+        this.identifier = UUID.randomUUID();
 
         if (amount < 0) {
             setCategory(Category.CREDIT);
@@ -33,7 +32,9 @@ public class Transaction {
         }
 
         this.amount = amount;
-        if (getCategory() == Category.DEBIT && recipient.getBalance() < amount || getCategory() == Category.CREDIT && sender.getBalance() < Math.abs(amount)) {
+
+        if (getCategory() == Category.DEBIT && recipient.getBalance() < amount
+                || getCategory() == Category.CREDIT && sender.getBalance() < Math.abs(amount)) {
             setStatus(Status.FAIL);
         } else {
             sender.setBalance(sender.getBalance() + amount);
@@ -50,20 +51,20 @@ public class Transaction {
         this.identifier = identifier;
     }
 
-    public User getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(User recipient) {
-        this.recipient = recipient;
-    }
-
     public User getSender() {
         return sender;
     }
 
     public void setSender(User sender) {
         this.sender = sender;
+    }
+
+    public User getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(User recipient) {
+        this.recipient = recipient;
     }
 
     public Integer getAmount() {
@@ -78,7 +79,7 @@ public class Transaction {
         return category;
     }
 
-    public void setCategory(Transaction.Category category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -90,13 +91,15 @@ public class Transaction {
         this.status = status;
     }
 
-    public String   toString() {
-        return "Transaction { " +
-                "identifier: " + identifier +
-                ", recipient: " + recipient.getName() +
-                ", sender: " + sender.getName() +
-                ", amount: " + amount +
-                ", category: " + category +
-                ", status: " + status + "}";
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "identifier=" + identifier +
+                ", sender=" + sender.getName() +
+                ", recipient=" + recipient.getName() +
+                ", amount=" + amount +
+                ", category=" + category +
+                ", status=" + status +
+                '}';
     }
 }

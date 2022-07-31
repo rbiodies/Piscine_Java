@@ -1,3 +1,5 @@
+package ex02;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,65 +15,67 @@ public class Program {
     public static void  main(String[] args) {
         if (args.length != 1 || !args[0].startsWith("--current-folder=")) {
             System.err.println("Usage: --current-folder=<path of folder>");
-            return;
-        }
-
-        try {
-            String path = args[0].substring(args[0].indexOf('=') + 1);
-            startPath(path);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            try {
+                String path = args[0].substring(args[0].indexOf('=') + 1);
+                startPath(path);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public static void  startPath(String path) throws IOException {
-        File    file = new File(path);
+        Scanner scanner = new Scanner(System.in);
+        File file = new File(path);
 
         if (!file.isDirectory()) {
-            System.err.println("Error: File is not directory!");
-            return;
-        }
+            System.err.println("Error: This directory not found!");
+        } else {
+            System.out.println(path);
 
-        System.out.println(path);
+            while (true) {
+                String input = scanner.nextLine();
 
-        Scanner scanner = new Scanner(System.in);
-        String  input = scanner.nextLine();
+                if (input.equals("exit")) {
+                    break;
+                } else if (input.equals("ls")) {
+                    inputLs(file);
+                } else if (input.startsWith("cd ")) {
+                    if (input.endsWith("..")) {
+                        path = path.substring(0, path.lastIndexOf('/'));
+                    } else if (path.endsWith("/")) {
+                        path += input.substring(input.indexOf(' ') + 1);
+                    } else {
+                        path += "/" + input.substring(input.indexOf(' ') + 1);
+                    }
+                    startPath(path);
+                    break;
+                } else if (input.startsWith("mv ")) {
+                    String[] inputArgs = input.split(" ");
 
-        while (!input.equals("exit")) {
-            if (input. equals("ls")) {
-                inputLs(file);
-            } else if (input.startsWith("cd ")) {
-                if (path.endsWith("/")) {
-                    path += input.substring(input.indexOf(' ') + 1);
+                    if (inputArgs.length == 3) {
+                        inputMv(file, inputArgs[1].trim(), inputArgs[2].trim());
+                    } else {
+                        System.out.println("Error: Invalid number of arguments!");
+                    }
                 } else {
-                    path += "/" + input.substring(input.indexOf(' ') + 1);
+                    System.out.println("Error: Command not found!");
                 }
-                startPath(path);
-                break;
-            } else if (input.startsWith("mv ")) {
-                String[] inputArgs = input.split(" ");
-                if (inputArgs.length == 3) {
-                    inputMv(file, inputArgs[1].trim(), inputArgs[2].trim());
-                } else {
-                    System.err.println("Error: Invalid number of arguments!");
-                }
-            } else {
-                System.err.println("Error: Command not found!");
             }
-            input = scanner.nextLine();
         }
     }
 
     public static void inputLs(File dir) {
         if (!dir.isDirectory()) {
-            System.err.println("Error: Directory not found!");
-            return;
-        }
-        for (File item : Objects.requireNonNull(dir.listFiles())) {
-            if (item.isDirectory()) {
-                System.out.println(item.getName() + " " + folderSize(item) / 1000 + " KB");
-            } else {
-                System.out.println(item.getName() + " " + item.length() / 1000 + " KB");
+            System.out.println("Error: Directory not found!");
+        } else {
+            for (File item : Objects.requireNonNull(dir.listFiles())) {
+                if (item.isDirectory()) {
+                    System.out.println(item.getName() + " " + folderSize(item) / 1000 + " KB");
+                } else {
+                    System.out.println(item.getName() + " " + item.length() / 1000 + " KB");
+                }
             }
         }
     }
@@ -90,11 +94,11 @@ public class Program {
     }
 
     public static void inputMv(File path, String pureFileName, String mvFolder) throws IOException {
-        String  fileName = path + "/" + pureFileName;
-        Path    filePath = Paths.get(fileName);
+        String fileName = path + "/" + pureFileName;
+        Path filePath = Paths.get(fileName);
 
-        String  mvFolderName = path + "/" + mvFolder;
-        Path    mvFolderPath = Paths.get(mvFolderName);
+        String mvFolderName = path + "/" + mvFolder;
+        Path mvFolderPath = Paths.get(mvFolderName);
 
         if (Files.isDirectory(mvFolderPath)) {
             mvFolderName += "/" + pureFileName;
@@ -103,7 +107,7 @@ public class Program {
         if (Files.exists(filePath)) {
             Files.move(filePath, mvFolderPath, REPLACE_EXISTING);
         } else {
-            System.err.println("Error: File not found!");
+            System.out.println("Error: File not found!");
         }
     }
 }

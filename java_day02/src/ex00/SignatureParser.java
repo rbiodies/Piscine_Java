@@ -1,3 +1,5 @@
+package ex00;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -5,28 +7,30 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class SignatureParser {
-    private final Scanner   scanner;
+    private final Scanner scanner;
 
     public SignatureParser(File signatures) throws FileNotFoundException {
         this.scanner = new Scanner(signatures);
     }
 
     public Map<short[],String> parseKeyValues() {
-        Map<short[], String> ret = new HashMap<>();
+        Map<short[], String> map = new HashMap<>();
         String line = readLine();
 
         while (!line.isEmpty()) {
             short[] key = convertKeyToBytes(getKey(line));
-            String  value = getValue(line);
+            String value = getValue(line);
+
             if (key.length > 0 && !value.isEmpty()) {
-                ret.put(key, value);
+                map.put(key, value);
             }
             line = readLine();
         }
-        return ret;
+        scanner.close();
+        return map;
     }
 
-    private String  readLine() {
+    private String readLine() {
         if (scanner.hasNextLine()) {
             return scanner.nextLine();
         } else {
@@ -40,13 +44,13 @@ public class SignatureParser {
 
     private short[] convertKeyToBytes(String key) {
         int count = countBytes(key);
-        short[] ret = new short[count];
+        short[] bytes = new short[count];
         Scanner keyParser = new Scanner(key).useRadix(16);
 
         for (int i = 0; i < count; i++) {
-            ret[i] = keyParser.nextShort();
+            bytes[i] = keyParser.nextShort();
         }
-        return ret;
+        return bytes;
     }
 
     private int countBytes(String key) {

@@ -3,88 +3,87 @@ package ex04;
 import java.util.UUID;
 
 public class Transaction {
+    private UUID identifier;
+    private User sender;
+    private User recipient;
+    private Integer amount;
+    private Category category;
 
-        private UUID        identifier;
-        private User        recipient;
-        private User        sender;
-        private Integer     amount;
-        private Category    category;
+    private enum Category {
+        DEBIT,
+        CREDIT
+    }
 
-        private enum    Category {
-            DEBIT,
-            CREDIT
+    public Transaction(User sender, User recipient, Integer amount) {
+        this.sender = sender;
+        this.recipient = recipient;
+        this.identifier = UUID.randomUUID();
+
+        if (amount < 0) {
+            setCategory(Category.CREDIT);
+        } else {
+            setCategory(Category.DEBIT);
         }
 
-        public Transaction(User sender, User recipient, Integer amount) {
-            this.sender = sender;
-            this.recipient = recipient;
-            this.identifier = new UUID(123, 456);
+        this.amount = amount;
 
-            if (amount < 0) {
-                setCategory(Category.CREDIT);
-            } else {
-                setCategory(Category.DEBIT);
-            }
-
-            this.amount = amount;
-            if (getCategory() == Transaction.Category.DEBIT) {
-                if (recipient.getBalance() < amount) {
-                    throw new IIllegalTransactionException();
-                } else {
-                    sender.setBalance(sender.getBalance() + amount);
-                    recipient.setBalance(recipient.getBalance() - amount);
-                }
-            }
+        if (getCategory() == Category.CREDIT && sender.getBalance() < Math.abs(amount)
+                || getCategory() == Category.DEBIT && recipient.getBalance() < amount) {
+            throw new IIllegalTransactionException();
+        } else if (getCategory() == Category.CREDIT) {
+            sender.setBalance(sender.getBalance() + amount);
+            recipient.setBalance(recipient.getBalance() - amount);
         }
+    }
 
-        public UUID getIdentifier() {
-            return identifier;
-        }
+    public UUID getIdentifier() {
+        return identifier;
+    }
 
-        public void setIdentifier(UUID identifier) {
-            this.identifier = identifier;
-        }
+    public void setIdentifier(UUID identifier) {
+        this.identifier = identifier;
+    }
 
-        public User getRecipient() {
-            return recipient;
-        }
+    public User getSender() {
+        return sender;
+    }
 
-        public void setRecipient(User recipient) {
-            this.recipient = recipient;
-        }
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
 
-        public User getSender() {
-            return sender;
-        }
+    public User getRecipient() {
+        return recipient;
+    }
 
-        public void setSender(User sender) {
-            this.sender = sender;
-        }
+    public void setRecipient(User recipient) {
+        this.recipient = recipient;
+    }
 
-        public Integer getAmount() {
-            return amount;
-        }
+    public Integer getAmount() {
+        return amount;
+    }
 
-        public void setAmount(Integer amount) {
-            this.amount = amount;
-        }
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
 
-        public Category getCategory() {
-            return category;
-        }
+    public Category getCategory() {
+        return category;
+    }
 
-        public void setCategory(Category category) {
-            this.category = category;
-        }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
-        public String   toString() {
-            return "Transaction { " +
-                    "identifier: " + identifier +
-                    ", recipient: " + recipient.getName() +
-                    ", index: " + recipient.getIdentifier() +
-                    ", sender: " + sender.getName() +
-                    ", index: " + sender.getIdentifier() +
-                    ", amount: " + amount +
-                    ", category: " + category;
-        }
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "identifier=" + identifier +
+                ", sender=" + sender.getName() +
+                ", recipient=" + recipient.getName() +
+                ", amount=" + amount +
+                ", category=" + category +
+                '}';
+    }
 }

@@ -3,20 +3,23 @@ package ex04;
 import java.util.UUID;
 
 public class User {
-
-    private Integer identifier;
+    private final Integer id;
     private String  name;
     private Integer balance;
     private final TransactionsLinkedList transactionsLinkedList;
 
     public User(String name, Integer balance) {
-        this.identifier = UserIdsGenerator.getInstance().generateId();
-        setName(name);
+        this.id = UserIdsGenerator.getInstance().generateId();
+        this.name = name;
         setBalance(balance);
         transactionsLinkedList = new TransactionsLinkedList();
     }
 
-    public String   getName() {
+    public Integer getIdentifier() {
+        return id;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -36,27 +39,24 @@ public class User {
         }
     }
 
-    public Integer  getIdentifier() {
-        return identifier;
+    public void addTransaction(Transaction transaction) {
+        transactionsLinkedList.addTransaction(transaction);
     }
 
-    public void setIdentifier(Integer identifier) {
-        this.identifier = identifier;
-    }
-
-    public void addTransaction(Transaction tr) {
-        transactionsLinkedList.addTransaction(tr);
-    }
-
-    public Transaction[]    getArray() {
+    public Transaction[] getArray() {
         return transactionsLinkedList.toArray();
     }
 
-    public String toString() {
-        return "User { identifier: " + identifier + ", name: '" + name + "'" + ", balance: " + balance + " }";
+    public void removeTransaction(UUID identifier) {
+        transactionsLinkedList.removeTransactionByID(identifier);
     }
 
-    public void removeTransaction(UUID id) {
-        transactionsLinkedList.removeTransactionByID(id);
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 }

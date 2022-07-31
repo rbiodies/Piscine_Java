@@ -7,26 +7,26 @@ VALUES ('Sergey', '123qwe');
 INSERT INTO chat.users (login, password)
 VALUES ('Andrew', '111111');
 INSERT INTO chat.users (login, password)
-VALUES ('user', 'user');
+VALUES ('Bob', '000000');
 
-INSERT INTO chat.rooms (name, owner)
-VALUES ('Guest', 1);
-INSERT INTO chat.rooms (name, owner)
-VALUES ('Children', 2);
-INSERT INTO chat.rooms (name, owner)
-VALUES ('Sleep', 3);
-INSERT INTO chat.rooms (name, owner)
-VALUES ('Kitchen', 4);
-INSERT INTO chat.rooms (name, owner)
-VALUES ('room', 5);
+INSERT INTO chat.rooms (chat_owner, chat_name)
+VALUES (1, 'Guest');
+INSERT INTO chat.rooms (chat_owner, chat_name)
+VALUES (2, 'Children');
+INSERT INTO chat.rooms (chat_owner, chat_name)
+VALUES (3, 'Sleep');
+INSERT INTO chat.rooms (chat_owner, chat_name)
+VALUES (4, 'Kitchen');
+INSERT INTO chat.rooms (chat_owner, chat_name)
+VALUES (5, 'WC');
 
-INSERT INTO chat.messages (author, room, text, timestamp)
+INSERT INTO chat.messages (room_id, sender, text, time)
 VALUES (1, 1, 'Hey, Bro!', '2022-01-01 00:00:01');
-INSERT INTO chat.messages (author, room, text, timestamp)
-VALUES (2, 3, 'How are you?', '2022-01-01 00:00:01');
-INSERT INTO chat.messages (author, room, text, timestamp)
-VALUES (5, 3, 'You should me 300$!', '2022-01-01 00:00:02');
-INSERT INTO chat.messages (author, room, text, timestamp)
+INSERT INTO chat.messages (room_id, sender, text, time)
+VALUES (3, 2, 'How are you?', '2022-01-01 00:00:01');
+INSERT INTO chat.messages (room_id, sender, text, time)
+VALUES (3, 5, 'You should me 300$!', '2022-01-01 00:00:02');
+INSERT INTO chat.messages (room_id, sender, text, time)
 VALUES (4, 4, 'lol', '2022-01-01 00:00:04');
-INSERT INTO chat.messages (author, room, text, timestamp)
+INSERT INTO chat.messages (room_id, sender, text, time)
 VALUES (5, 5, 'message', '2001-01-01 15:59:00');

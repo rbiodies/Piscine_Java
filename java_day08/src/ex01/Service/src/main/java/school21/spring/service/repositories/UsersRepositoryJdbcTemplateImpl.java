@@ -1,44 +1,52 @@
 package school21.spring.service.repositories;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import school21.spring.service.models.User;
 
+import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
-    public JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    public UsersRepositoryJdbcTemplateImpl(JDBCGenerator dataSource) {
-        jdbcTemplate = new JdbcTemplate(dataSource.managerDataSource);
+    public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
+        jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
     public User findById(Long id) {
-        return jdbcTemplate.query("SELECT * FROM roomdb.users WHERE id = ?", new Object[]{id}, (rs, ))
+        return jdbcTemplate.query("SELECT * FROM roomdb.users WHERE id = ?",
+                new Object[]{id}, (rs, rowNum) -> new User(rs.getLong(1), rs.getString(2)))
                 .stream().findAny().orElse(null);
     }
 
     @Override
     public List<User> findAll() {
-        return jdbcTemplate.query("select * from roomdb.users", (rs, rowNum) -> new User(rs.getLong("")));
+        return jdbcTemplate.query("SELECT * FROM roomdb.users",
+                (rs, rowNum) -> new User(rs.getLong(1), rs.getString(2)));
     }
 
     @Override
     public void save(User entity) {
-        jdbcTemplate.update("insert into roomdb.users (email) values (?)", entity.getEmail());
+        jdbcTemplate.update("INSERT INTO roomdb.users (email) VALUES (?)", entity.getEmail());
     }
 
     @Override
     public void update(User entity) {
-
+        jdbcTemplate.update("UPDATE roomdb.users SET email = ? WHERE id = ?", entity.getEmail(), entity.getId());
     }
 
     @Override
     public void delete(Long id) {
-
+        jdbcTemplate.update("DELETE FROM roomdb.users WHERE id = ?", id);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return null;
+        User user = jdbcTemplate.query("SELECT * FROM roomdb.users WHERE email = ?",
+                        new Object[]{email}, (rs, rowNum) -> new User(rs.getLong(1), rs.getString(2)))
+                .stream().findAny().orElse(null);
+        return Optional.ofNullable(user);
     }
 }

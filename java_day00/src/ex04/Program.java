@@ -1,26 +1,28 @@
+package ex04;
 
 import java.util.Scanner;
 
 public class Program {
-    static final int    MAX_CHAR_CODES = 65535;
-    static final int    MAX_TOP_CHARS = 10;
+    static final int MAX_CHAR_CODES = 65535;
+    static final int MAX_TOP_CHARS = 10;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String  str = scanner.nextLine();
-        int[]   charCount = getCharToInt(str);
-        char[]  topTenChars = getTopTenChars(charCount);
+        String str = scanner.nextLine();
+        int[] charCount = getCharToInt(str);
+        char[] topTenChars = getTopTenChars(charCount);
+
         printGraph(topTenChars, charCount);
     }
 
     static int[] getCharToInt(String str) {
-        int[]   charCount = new int[MAX_CHAR_CODES];
-        char[]  arr = str.toCharArray();
+        int[] charCount = new int[MAX_CHAR_CODES];
+        char[] arr = str.toCharArray();
 
-         for (int i = 0; i < str.length(); i++) {
-             charCount[arr[i]]++;
-         }
-         return charCount;
+        for (int i = 0; i < str.length(); i++) {
+            charCount[arr[i]]++;
+        }
+        return charCount;
     }
 
     static char[]   getTopTenChars(int[] charCount) {
@@ -40,13 +42,13 @@ public class Program {
         return topTenChars;
     }
 
-    static char[]   insertCharAt(char[] base, char c, int index) {
+    static char[]   insertCharAt(char[] base, char ch, int index) {
         char[] ret = new char[MAX_TOP_CHARS];
 
         for (int i = 0; i < index; i++) {
             ret[i] = base[i];
         }
-        ret[index] = c;
+        ret[index] = ch;
         for (int i = index + 1; i < MAX_TOP_CHARS; i++) {
             ret[i] = base[i - 1];
         }

@@ -4,26 +4,25 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Message {
+    private int id;
+    private User author;
+    private Chatroom room;
+    private String text;
+    private final LocalDateTime dateTime;
 
-    private long        id;
-    private User        author;
-    private Chatroom    chatroom;
-    private String      text;
-    private LocalDateTime   messageDataTime;
-
-    public Message(long id, User author, Chatroom chatroom, String text, LocalDateTime messageDataTime) {
+    public Message(int id, User author, Chatroom room, String text, LocalDateTime dateTime) {
         this.id = id;
         this.author = author;
-        this.chatroom = chatroom;
+        this.room = room;
         this.text = text;
-        this.messageDataTime = messageDataTime;
+        this.dateTime = dateTime;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,14 +35,14 @@ public class Message {
     }
 
     public Chatroom getChatroom() {
-        return chatroom;
+        return room;
     }
 
-    public void setChatroom(Chatroom chatroom) {
-        this.chatroom = chatroom;
+    public void setChatroom(Chatroom room) {
+        this.room = room;
     }
 
-    public String   getText() {
+    public String getText() {
         return text;
     }
 
@@ -51,29 +50,28 @@ public class Message {
         this.text = text;
     }
 
-    public boolean  equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Message    message = (Message) o;
-
-        return id == message.id && author.equals(message.author) && chatroom.equals(message.chatroom) && text.equals(message.text) && messageDataTime.equals(message.messageDataTime);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return id == message.id && Objects.equals(author, message.author) && Objects.equals(room, message.room)
+                && Objects.equals(text, message.text) && Objects.equals(dateTime, message.dateTime);
     }
 
-    public int  hashCode() {
-        return Objects.hash(id, author, chatroom, text, messageDataTime);
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, author, room, text, dateTime);
     }
 
-    public String   toString() {
-        return "User{" +
+    @Override
+    public String toString() {
+        return "Message{" +
                 "id=" + id +
                 ", author=" + author +
-                ", chatroom=" + chatroom +
-                ", text=" + text +
-                ", messageDataTime=" + messageDataTime + "}";
+                ", room=" + room +
+                ", text='" + text + '\'' +
+                ", dateTime=" + dateTime +
+                '}';
     }
 }

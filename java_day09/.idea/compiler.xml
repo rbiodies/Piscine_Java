@@ -6,13 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SocketServer" />
         <module name="SocketClient" />
+        <module name="SocketServer1" />
+        <module name="SocketClient1" />
+        <module name="SocketServer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="SocketClient" target="8" />
+      <module name="SocketClient1" target="8" />
       <module name="SocketServer" target="8" />
+      <module name="SocketServer1" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

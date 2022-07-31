@@ -4,45 +4,28 @@ import java.util.List;
 import java.util.Objects;
 
 public class Chatroom {
-    private long    id;
-    private String  name;
-    private User    owner;
-    private List<Message> roomMessage;
+    private long id;
+    private String name;
+    private User owner;
+    private final List<Message> messages;
 
-    public Chatroom(long id, String name, User owner, List<Message> roomMessage) {
+    public Chatroom(long id, String name, User owner, List<Message> messages) {
         this.id = id;
         this.name = name;
         this.owner = owner;
-        this.roomMessage = roomMessage;
-    }
-
-    public boolean  equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Chatroom    chatroom = (Chatroom) o;
-
-        return id == chatroom.id && name.equals(chatroom.name) && owner.equals(chatroom.owner) && roomMessage.equals(chatroom.roomMessage);
-    }
-
-    public int  hashCode() {
-        return Objects.hash(id, name, owner, roomMessage);
+        this.messages = messages;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId() {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String   getName() {
-        return getName();
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -57,10 +40,27 @@ public class Chatroom {
         this.owner = owner;
     }
 
-    public String   toString() {
-        return  "{id=" + id +
-                ",name=\"" + name +
-                "\",creator=" + owner.getLogin() +
-                ",messages=" + roomMessage + "}";
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Chatroom chatroom = (Chatroom) o;
+        return id == chatroom.id && Objects.equals(name, chatroom.name)
+                && Objects.equals(owner, chatroom.owner) && Objects.equals(messages, chatroom.messages);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, owner, messages);
+    }
+
+    @Override
+    public String toString() {
+        return "Chatroom{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", owner=" + owner +
+                ", messages=" + messages +
+                '}';
     }
 }

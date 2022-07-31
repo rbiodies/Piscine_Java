@@ -6,23 +6,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class UserRepositoryJdbcImpl implements UserRepository {
-    private final Connection    dataSource;
+    private final Connection dataSource;
 
     public  UserRepositoryJdbcImpl(Connection dataSource) {
         this.dataSource = dataSource;
     }
 
-    public Optional<User>   findById(Long id) {
-        ResultSet   resultSet;
-        User        ret = null;
+    public User findById(Long id) {
+        String query = "SELECT * FROM chat.users WHERE id=?";
+        User ret = null;
 
-        try {
-            PreparedStatement query = dataSource.prepareStatement("SELECT * FROM chat.users WHERE id=?");
-            query.setLong(1, id);
-            resultSet = query.executeQuery();
+        try (PreparedStatement statement = dataSource.prepareStatement(query)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 ret = new User(
                         resultSet.getLong("id"),
@@ -35,6 +33,6 @@ public class UserRepositoryJdbcImpl implements UserRepository {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return Optional.ofNullable(ret);
+        return ret;
     }
 }

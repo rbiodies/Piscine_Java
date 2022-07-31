@@ -22,7 +22,7 @@ public class EmbeddedDataSourceTest {
     }
 
     @Test
-    void    testConnection() throws SQLException {
+    void testConnection() throws SQLException {
         Assertions.assertNotNull(dataSource.getConnection());
     }
 }

@@ -1,13 +1,12 @@
 package ex03;
 
-public final class UserIdsGenerator {
-
+public class UserIdsGenerator {
     private static UserIdsGenerator instance;
     private static int id = 0;
 
     private UserIdsGenerator() {}
 
-    public static UserIdsGenerator  getInstance() {
+    public static UserIdsGenerator getInstance() {
         if (instance == null) {
             instance = new UserIdsGenerator();
         }

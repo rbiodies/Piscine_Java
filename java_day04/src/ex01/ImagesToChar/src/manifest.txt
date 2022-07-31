@@ -1,2 +1,1 @@
 main-class: edu.school21.printer.app.Program
-class-path: target/edu/school21/printer/app/

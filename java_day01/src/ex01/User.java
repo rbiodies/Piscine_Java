@@ -1,18 +1,21 @@
 package ex01;
 
 public class User {
-
-    private Integer identifier;
-    private String  name;
+    private final Integer id;
+    private String name;
     private Integer balance;
 
     public User(String name, Integer balance) {
-        this.identifier = UserIdsGenerator.getInstance().generateId();
-        setName(name);
+        this.id = UserIdsGenerator.getInstance().generateId();
+        this.name = name;
         setBalance(balance);
     }
 
-    public String   getName() {
+    public Integer getIdentifier() {
+        return id;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -30,13 +33,5 @@ public class User {
         } else {
             this.balance = balance;
         }
-    }
-
-    public Integer  getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(Integer identifier) {
-        this.identifier = identifier;
     }
 }

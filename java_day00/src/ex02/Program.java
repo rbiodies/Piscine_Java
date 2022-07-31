@@ -1,3 +1,4 @@
+package ex02;
 
 import java.util.Scanner;
 
@@ -5,27 +6,22 @@ public class Program {
 
     public static void  main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int     number;
-        int     count = 0;
+        int number = 0;
+        int count = 0;
 
-        if (scanner.hasNextInt()) {
-            number = scanner.nextInt();
-        } else {
-            System.err.println("Input the number of integer type for check his sum of digits!");
-            return;
-        }
         while (number != 42) {
-            if (checkSum(countSum(number))) {
-                count++;
-            }
             if (scanner.hasNextInt()) {
                 number = scanner.nextInt();
             } else {
-                System.err.println("Input the number of integer type for check his sum of digits!");
-                break;
+                System.err.println("Not Integer Type");
+                System.exit(-1);
+            }
+            if (isPrime(countSum(number))) {
+                count++;
             }
         }
         System.out.printf("Count of coffee-request – %d\n", count);
+        scanner.close();
     }
 
     static int countSum(int number) {
@@ -38,15 +34,17 @@ public class Program {
         return sum;
     }
 
-    static boolean checkSum(int sum) {
+    static boolean isPrime(int sum) {
         int i;
 
-        if (sum <= 1) {
+        if (sum < 2) {
             return false;
         } else if (sum == 2) {
             return true;
         }
-        for (i = 2; i <= mySqrt(sum); i++) {
+        int sqrt = mySqrt(sum);
+
+        for (i = 2; i <= sqrt; i++) {
             if (sum % i == 0) {
                 return false;
             }

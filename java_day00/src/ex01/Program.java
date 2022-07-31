@@ -1,3 +1,4 @@
+package ex01;
 
 import java.util.Scanner;
 
@@ -5,27 +6,29 @@ public class Program {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int number = 0;
-        boolean result = true;
-        int     i;
+        boolean isPrime = true;
+        int number;
+        int i;
 
         if (scanner.hasNextInt()) {
             number = scanner.nextInt();
-        } else {
-            System.err.println("Input the number of integer type for his check!");
-            System.exit(-1);
-        }
-        if (number <= 1) {
-            System.err.println("Illegal Argument");
-            System.exit(-1);
-        }
-        for (i = 2; i <= mySqrt(number); i++) {
-            if (number % i == 0) {
-                result = false;
-                break;
+            if (number < 2) {
+                System.err.println("Illegal Argument");
+                System.exit(-1);
             }
+            int sqrt = mySqrt(number);
+
+            for (i = 2; i <= sqrt; i++) {
+                if (number % i == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            System.out.println(isPrime + " " + (i - 1));
+        } else {
+            System.err.println("Not Integer Type");
         }
-        System.out.println(result + " " + (i - 1));
+        scanner.close();
     }
 
     static int mySqrt(int number) {

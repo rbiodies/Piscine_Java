@@ -2,7 +2,7 @@ package ex02;
 
 public class Program {
 
-    public static void  main(String[] args) throws UserNotFoundException {
+    public static void main(String[] args) throws UserNotFoundException {
         UsersArrayList usersArrayList = new UsersArrayList();
 
         for (int i = 0; i < 20; i++) {

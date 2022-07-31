@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/src/ex01/Service/Service.iml" filepath="$PROJECT_DIR$/src/ex01/Service/Service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/ex02/Service/Service1.iml" filepath="$PROJECT_DIR$/src/ex02/Service/Service1.iml" />
       <module fileurl="file://$PROJECT_DIR$/src/ex00/Spring/Spring.iml" filepath="$PROJECT_DIR$/src/ex00/Spring/Spring.iml" />
       <module fileurl="file://$PROJECT_DIR$/java_day08.iml" filepath="$PROJECT_DIR$/java_day08.iml" />
     </modules>

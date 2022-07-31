@@ -12,20 +12,18 @@ public class Program {
     public static void  main(String[] args) throws IOException {
         if (args.length != 3 || args[0].length() != 1 || args[1].length() != 1) {
             System.err.println("Use README.txt");
-            return;
+        } else {
+            File file = new File(args[2]);
+
+            if (!file.exists() || !file.isFile()) {
+                System.err.println("Error: Invalid path!");
+            } else {
+                char white = args[0].charAt(0);
+                char black = args[1].charAt(0);
+                BufferedImage image = ImageIO.read(file);
+
+                new Logic(white, black).printImage(image);
+            }
         }
-
-        File    file = new File(args[2]);
-
-        if (!file.exists() || !file.isFile()) {
-            System.err.println("Error: Invalid path!");
-            return;
-        }
-
-        char            white = args[0].charAt(0);
-        char            black = args[1].charAt(0);
-        BufferedImage   image = ImageIO.read(file);
-
-        new Logic(white, black).printImage(image);
     }
 }

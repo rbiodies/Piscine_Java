@@ -25,6 +25,7 @@ public class NumberWorker {
     }
 
     static class IllegalNumberException extends RuntimeException {
+
         public IllegalNumberException() {
             super("The number should be > 1");
         }

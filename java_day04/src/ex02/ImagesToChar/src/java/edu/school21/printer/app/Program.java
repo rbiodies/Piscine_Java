@@ -7,42 +7,40 @@ import edu.school21.printer.logic.Logic;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 @Parameters(separators = "=")
 public class Program {
 
     @Parameter(names = {"--white"})
-    private static String   white;
+    private static String white;
     @Parameter(names = {"--black"})
-    private static String   black;
+    private static String black;
 
     public static void  main(String[] args) throws IOException {
         if (args.length != 2 || !args[0].startsWith("--white=") || !args[1].startsWith("--black=")) {
             System.err.println("Use README.txt");
-            return;
+        } else {
+            Program program = new Program();
+
+            JCommander.newBuilder()
+                    .addObject(program)
+                    .build()
+                    .parse(args);
+            run();
         }
-
-        Program program = new Program();
-
-        JCommander.newBuilder()
-                .addObject(program)
-                .build()
-                .parse(args);
-        run();
     }
 
     private static void run() throws IOException {
-        File    file = new File("src/resources/image.bmp");
+        URL url = Logic.class.getResource("/resources/image.bmp");
 
-        if (!file.exists() || !file.isFile()) {
+        if (url == null) {
             System.err.println("Error: Invalid path!");
-            return;
+        } else {
+            BufferedImage image = ImageIO.read(url);
+
+            new Logic(white, black).printImage(image);
         }
-
-        BufferedImage   image = ImageIO.read(file);
-
-        new Logic(white, black).printImage(image);
     }
 }

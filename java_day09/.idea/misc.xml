@@ -3,8 +3,12 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+        <option value="$PROJECT_DIR$/src/ex00/Chat/SockerServer/pom.xml" />
+        <option value="$PROJECT_DIR$/src/ex00/Chat/SockerClient/pom.xml" />
         <option value="$PROJECT_DIR$/src/ex00/Chat/SocketClient/pom.xml" />
         <option value="$PROJECT_DIR$/src/ex00/Chat/SocketServer/pom.xml" />
+        <option value="$PROJECT_DIR$/src/ex01/Chat/SocketServer/pom.xml" />
+        <option value="$PROJECT_DIR$/src/ex01/Chat/SocketClient/pom.xml" />
       </list>
     </option>
   </component>

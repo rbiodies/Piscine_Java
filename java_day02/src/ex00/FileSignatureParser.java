@@ -1,3 +1,5 @@
+package ex00;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,34 +12,41 @@ public class FileSignatureParser {
 
     public List<String> getResultingTypes(Map<short[], String> map) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        List<String> ret = new ArrayList<>();
-        String  input = scanner.nextLine();
-        while (!input.equals("42")) {
-            checkPath(input);
+        List<String> values = new ArrayList<>();
+
+        while (true) {
+            String input = scanner.nextLine();
+
+            if (input.equals("42") || !isExist(input)) {
+                break;
+            }
+
             boolean wasProcessed = false;
+
             for (short[] key : map.keySet()) {
                 FileInputStream fileScanner = new FileInputStream(input);
-                short[] fileContent = getBytes(key.length, fileScanner);
+                short[] fileBytes = getBytes(key.length, fileScanner);
+
                 fileScanner.close();
-                if (compareBytes(key, fileContent)) {
-                    ret.add(map.get(key));
+                if (isEqualBytes(key, fileBytes)) {
+                    values.add(map.get(key));
                     wasProcessed = true;
                     break;
                 }
             }
             System.out.println(wasProcessed ? "PROCESSED" : "UNDEFINED");
-            input = scanner.nextLine();
         }
-        return ret;
+        return values;
     }
 
-    static void checkPath(String input) {
+    static boolean isExist(String input) {
         File path = new File(input);
 
         if (!path.isFile()) {
-            System.out.println("Error: File not found!");
-            System.exit(-1);
+            System.err.println("Error: File not found!");
+            return false;
         }
+        return true;
     }
 
     private short[] getBytes(int length, FileInputStream fileScanner) throws IOException {
@@ -49,7 +58,7 @@ public class FileSignatureParser {
         return bytes;
     }
 
-    private boolean compareBytes(short[] key, short[] fileContent) {
+    private boolean isEqualBytes(short[] key, short[] fileContent) {
         for (int i = 0; i < key.length; i++) {
             if (key[i] != fileContent[i]) {
                 return false;

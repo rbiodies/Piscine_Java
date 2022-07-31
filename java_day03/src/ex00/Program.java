@@ -2,38 +2,36 @@ package ex00;
 
 public class Program {
 
-    public static void  main(String[] args) throws InterruptedException {
+    public static void  main(String[] args) {
         if (args.length != 1 || !args[0].startsWith("--count=")) {
             System.err.println("Usage: --count=<count of iterators>");
-            return;
-        }
+        } else {
+            try {
+                int count = Integer.parseInt(args[0].substring(args[0].indexOf('=') + 1));
 
-        int count;
+                if (count < 0) {
+                    System.err.println("Error: Too few argument!");
+                } else {
+                    MyThread henThread = new MyThread("Hen", count);
+                    MyThread eggThread = new MyThread("Egg", count);
 
-        try {
-            count = Integer.parseInt(args[0].substring(args[0].indexOf('=') + 1));
-        } catch (NumberFormatException e) {
-            System.err.println("Error: The number has not type of integer!");
-            return;
-        }
-        if (count < 0) {
-            System.err.println("Error: Too few argument!");
-            return;
-        }
+                    henThread.start();
+                    eggThread.start();
 
-        int sleepTime = 50;
-        MyThread henThread = new MyThread("Hen", count, sleepTime);
-        MyThread eggThread = new MyThread("Egg", count, sleepTime);
+                    try {
+                        henThread.join();
+                        eggThread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-        henThread.start();
-        eggThread.start();
-
-        henThread.join();
-        eggThread.join();
-
-        for (int i = 0; i < count; i++) {
-            Thread.sleep(sleepTime);
-            System.out.println("Human");
+                    for (int i = 0; i < count; i++) {
+                        System.out.println("Human");
+                    }
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Error: The number has not type of integer!");
+            }
         }
     }
 }

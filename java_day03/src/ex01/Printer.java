@@ -1,18 +1,25 @@
 package ex01;
 
 public class Printer {
-
     private boolean transfer = true;
 
-    public synchronized void    printMessage(String message, Type type) throws InterruptedException {
+    public synchronized void printMessage(String message, Type type) {
         if (type == Type.CONSUMER) {
-            while (transfer) {
-                wait();
+            if (transfer) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             transfer = true;
         } else if (type == Type.PRODUCER) {
-            while (!transfer) {
-                wait();
+            if (!transfer) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             transfer = false;
         }

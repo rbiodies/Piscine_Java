@@ -2,43 +2,43 @@ package edu.school21.chat.repositories;
 
 import edu.school21.chat.models.Message;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.Optional;
 
-public class MessagesRepositoryJdbcImpl implements MessagesRepository {
-    private final Connection    dataSource;
-    UserRepositoryJdbcImpl      userRepository;
-    ChatroomRepositoryJdbcImpl  chatroomRepository;
+public class  MessagesRepositoryJdbcImpl implements MessagesRepository {
+    private final DataSource ds;
 
-    public  MessagesRepositoryJdbcImpl(Connection dataSource, UserRepositoryJdbcImpl userRepository, ChatroomRepositoryJdbcImpl chatroomRepository) {
-        this.dataSource = dataSource;
-        this.userRepository = userRepository;
-        this.chatroomRepository = chatroomRepository;
+    public  MessagesRepositoryJdbcImpl(DataSource ds) {
+        this.ds = ds;
     }
 
+    @Override
     public Optional<Message> findById(Long id) {
-        ResultSet   resultSet;
-        Message ret = null;
+        Optional<Message> optionalMessage = Optional.empty();
+        String query = "SELECT * FROM chat.messages WHERE id=?";
 
-        try {
-            PreparedStatement query = dataSource.prepareStatement("SELECT * FROM chat.messages WHERE id=?");
-            query.setLong(1, id);
-            resultSet = query.executeQuery();
+        try (Connection connection = ds.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            UserRepositoryJdbcImpl userRep = new UserRepositoryJdbcImpl(connection);
+            ChatroomRepositoryJdbcImpl chatRep = new ChatroomRepositoryJdbcImpl(connection, userRep);
+
+            statement.setLong(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
             if (resultSet.next()) {
-                ret = new Message(
-                        resultSet.getLong("id"),
-                        userRepository.findById(resultSet.getLong("author")).orElse(null),
-                        chatroomRepository.findById(resultSet.getLong("room")).orElse(null),
+                optionalMessage = Optional.of(new Message(
+                        resultSet.getInt("id"),
+                        userRep.findById(resultSet.getLong("sender")),
+                        chatRep.findById(resultSet.getLong("room_id")),
                         resultSet.getString("text"),
-                        resultSet.getTimestamp("timestamp").toLocalDateTime()
-                );
+                        resultSet.getTimestamp("time").toLocalDateTime()
+                ));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return Optional.ofNullable(ret);
+        return optionalMessage;
     }
 }
